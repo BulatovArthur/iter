@@ -19,9 +19,9 @@ namespace BSTree {
         using value_type = T;
 
     public:
-        iterator(const iterator &);
+        //iterator(const iterator &);
 
-        ~iterator();
+        virtual ~iterator();
 
         iterator& operator=(const iterator &);
 
@@ -39,11 +39,17 @@ namespace BSTree {
 
         iterator operator++(int);
 
-        friend bool operator==(const iterator&, const iterator&);
+        //template <typename T1>
+        //friend bool operator==(const iterator<T1>& iter1, const iterator<T1>& iter2);
+        
+        template <typename T2>
+        friend bool operator!=(const iterator<T2>& iter1, const iterator<T2>& iter2) {
+            if(iter1.ptr->data != it2.ptr->data)
+                return true;
+            return false;
+        }
 
-        friend bool operator!=(const iterator&, const iterator&);
-
-        friend void swap(iterator& lhs, iterator& rhs);
+        //friend void swap(iterator& lhs, iterator& rhs);
 
     private:
         Node* ptr;
@@ -64,4 +70,42 @@ namespace BSTree {
         post_iterator(Node* ptr);
     // ...
     };
+    
+    template <typename T>
+    auto pre_iterator<T>::operator=(pre_iterator& iter)->pre_iterator<T>& {
+        this->ptr=iter.ptr;
+        return *this;
+    }
+
+    template <typename T>
+    auto post_iterator<T>::operator=(post_iterator& iter)->post_iterator<T>& {
+        this->ptr=iter.ptr;
+        return *this;
+    }
+
+    template <typename T>
+    pre_iterator<T>::pre_iterator() : ptr {nullptr} {}
+
+    template <typename T>
+    post_iterator<T>::post_iterator(Node<T>* ptr) {
+        this->ptr = ptr;
+    }
+
+    template <typename T>
+    post_iterator<T>::post_iterator() : ptr {nullptr} {}
+
+    template <typename T>
+    pre_iterator<T>::pre_iterator(Node<T>* ptr) {
+        this->ptr = ptr;
+    }
+    
+    template <typename T>
+    auto pre_iterator<T>::operator*() ->T & {
+        return ptr->data;
+    }
+
+    template <typename T>
+    auto post_iterator<T>::operator*() ->T & {
+        return ptr->data;
+    }
 }
