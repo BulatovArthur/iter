@@ -1,6 +1,8 @@
 #include <hode.hpp>
 #include <iterator.hpp>
 
+using namespace std;
+
 namespace BSTree {
 
     template <typename T>
@@ -9,7 +11,7 @@ namespace BSTree {
         using iterator = pre_order::iterator;
         using reverse_iterator = post_order::iterator;
 
-        Tree(std::initializer_list<T>);
+        Tree(initializer_list<T>);
 
         auto push_back(const T&) -> void;
 
